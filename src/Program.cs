@@ -8,9 +8,16 @@ namespace CoffeeFinder
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            if (OperatingSystem.IsWindowsVersionAtLeast(6,1))
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+            }
+            else
+            {
+                Console.WriteLine("This application requires Windows 6.1 or later to run.");
+            }
         }
     }
 }

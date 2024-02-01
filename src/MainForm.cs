@@ -2,16 +2,19 @@
 using System.Drawing;
 using System.Windows.Forms;
 
+#pragma warning disable CA1416
 namespace CoffeeFinder
 {
     public partial class MainForm : Form
     {
-        public int size = 100;
-        public Rectangle[][] grid;
-        public int AlexanderX;
-        public int AlexanderY;
-        public int CoffeeX;
-        public int CoffeeY;
+        Searcher programmer = new();
+
+        int size = 100;
+        Rectangle[][] grid;
+        int AlexanderX;
+        int AlexanderY;
+        int CoffeeX;
+        int CoffeeY;
 
         public MainForm()
         {
