@@ -4,39 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Coffee Finder" Height="676" Width="820" Foreground="Gainsboro" WindowStartupLocation="CenterScreen" FontFamily="{StaticResource NineteenNinetySeven}" FontSize="18" Icon="/assets/CoffeeIcon.ico" MinWidth="500" MinHeight="400" Loaded="OnWindowLoaded">
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#FF0A0A0A" Offset="0.7"/>
-            <GradientStop Color="#FF7B8CF5" Offset="0"/>
-        </LinearGradientBrush>
-    </Window.Background>
+        Title="Coffee Finder" Height="676" Width="820" Foreground="Gainsboro" WindowStartupLocation="CenterScreen" FontFamily="{StaticResource NineteenNinetySeven}" FontSize="18" Icon="/assets/CoffeeIcon.ico" MinWidth="500" MinHeight="400" Loaded="OnWindowLoaded" Background="#FF0A0A0A">
     <Grid x:Name="BigGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="5*"/>
-        </Grid.RowDefinitions>
-        <Grid x:Name="TopGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="23*"/>
-                <ColumnDefinition Width="182*"/>
-                <ColumnDefinition Width="182*"/>
-                <ColumnDefinition Width="23*"/>
-            </Grid.ColumnDefinitions>
-            <Label x:Name="AlgorithmLabel" Grid.Column="1" Content="Algorithm:" FontFamily="Nineteen Ninety Seven" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,40,0,0"/>
-            <ComboBox x:Name="AlgorithmComboBox" Grid.Column="1" FontFamily="Nineteen Ninety Seven" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand" Margin="143,42,0,0" Width="175">
-                <ComboBoxItem IsSelected="True" Content="Quicksort"/>
-                <ComboBoxItem Content="Bubble sort"/>
-            </ComboBox>
-            <Label x:Name="SizeLabel" Content="Size:" FontFamily="Nineteen Ninety Seven" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,40" Grid.Column="1"/>
-            <Slider x:Name="SizeSlider" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="ScrollWE" Margin="78,0,0,51" Width="240" SmallChange="1" LargeChange="10" Maximum="1000" Minimum="2" Value="200" IsSnapToTickEnabled="True" ValueChanged="OnSizeValueChanged"/>
-            <Label x:Name="SizeLog" Content="{Binding ElementName=SizeSlider, Path=Value}" FontFamily="Nineteen Ninety Seven" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="172,0,0,18" Grid.Column="1" FontSize="14"/>
-            <Button x:Name="SortButton" Grid.Column="2" Content="Sort" FontFamily="Nineteen Ninety Seven" FontSize="20" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Click="OnSortClick" Margin="0,33,196,0" Padding="20,10,20,10" HorizontalContentAlignment="Center" Width="122"/>
-            <Button x:Name="ResetButton" Grid.Column="2" Content="Reset" FontFamily="Nineteen Ninety Seven" FontSize="20" Background="White" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Click="OnResetClick" Margin="0,33,10,0" Padding="20,10,20,10" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="122"/>
-            <Label x:Name="SpeedLabel" Grid.Column="2" Content="Speed:" FontFamily="Nineteen Ninety Seven" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,228,40"/>
-            <Slider x:Name="SpeedSlider" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="ScrollWE" Margin="0,0,10,45" Width="200" SmallChange="1" LargeChange="2" Maximum="5" Minimum="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" ValueChanged="OnSpeedValueChange" Value="3"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="RightGrid" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="RunButton" Content="Run" FontFamily="Nineteen Ninety Seven" FontSize="20" Background="#FF008C00" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Hand" Click="OnExitClick" Padding="20,10,20,10" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="122" Margin="0,39,0,0" Foreground="White"/>
+            <Button x:Name="ExitButton" Content="Exit" FontFamily="Nineteen Ninety Seven" FontSize="20" Background="#FFB30000" HorizontalAlignment="Center" VerticalAlignment="Top" Cursor="Hand" Click="OnExitClick" Padding="20,10,20,10" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" Width="122" Margin="0,110,0,0" Foreground="White"/>
+            <Label x:Name="SizeLabel" Content="Size:" FontFamily="Nineteen Ninety Seven" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,10,0,0" Grid.Row="1" Foreground="White"/>
+            <Slider x:Name="SizeSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="ScrollNS" Margin="37,65,0,0" SmallChange="1" Maximum="5" Minimum="1" Value="3" IsSnapToTickEnabled="True" ValueChanged="OnSizeValueChanged" Orientation="Vertical" Height="191" Grid.Row="1" TickPlacement="BottomRight"/>
+            <Label x:Name="SizeLog" Content="{Binding ElementName=SizeSlider, Path=Value}" FontFamily="Nineteen Ninety Seven" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,140,0,0" FontSize="14" Grid.Row="1" Foreground="White"/>
         </Grid>
-        <Border x:Name="VisualizerBorder" BorderThickness="3,3,3,3" BorderBrush="Gainsboro" Margin="10,10,10,10" Grid.Row="2" CornerRadius="20,20,20,20" Background="#7F1E1E1E">
+        <Border x:Name="VisualizerBorder" BorderThickness="3,3,3,3" BorderBrush="Gainsboro" Margin="10,10,10,10" Background="#7F1E1E1E">
             <Canvas x:Name="VisualizerCanvas"/>
         </Border>
     </Grid>
