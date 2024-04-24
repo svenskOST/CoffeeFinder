@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -7,11 +6,12 @@ namespace CoffeeFinder
 {
     public partial class MainWindow : Window
     {
-        Searcher programmer = new();
-        Target coffee = new();
+        Searcher Programmer = new();
+        Target Coffee = new();
+
+        Rect[][] grid = [];
 
         int size = 100;
-        //Rectangle[][] grid;
         int AlexanderX;
         int AlexanderY;
         int CoffeeX;
@@ -26,15 +26,15 @@ namespace CoffeeFinder
 
         private void InitializeGrid()
         {
-            int columns = GridPanel.Width / size;
+            int columns = (int) Math.Floor(GridCanvas.ActualWidth / size);
             int rows = columns;
-            grid = new Rectangle[columns][];
-            for (int x = 0; x < grid.Length; x++)
+            grid = new Rect[columns][];
+            for (int i = 0; i < grid.Length; i++)
             {
-                grid[x] = new Rectangle[rows];
-                for (int y = 0; y < grid.Length; y++)
+                grid[i] = new Rect[rows];
+                for (int j = 0; j < grid.Length; j++)
                 {
-                    grid[x][y] = new Rectangle(x * size, y * size, size, size);
+                    grid[i][j] = new Rect(i * size, j * size, size, size);
                 }
             }
 
@@ -43,7 +43,7 @@ namespace CoffeeFinder
 
             void InitializeObjects()
             {
-                Random random = new Random();
+                Random random = new();
                 AlexanderX = RandomInt();
                 AlexanderY = RandomInt();
                 CoffeeX = RandomInt();
@@ -55,9 +55,10 @@ namespace CoffeeFinder
 
                 UpdatePositions();
 
-                Size objectSize = new Size(size, size);
-                Alexander.Size = objectSize;
-                Coffee.Size = objectSize;
+                Programmer.Width = size;
+                Programmer.Height = size;
+                Coffee.Width = size;
+                Coffee.Height = size;
 
                 int RandomInt()
                 {
@@ -68,19 +69,39 @@ namespace CoffeeFinder
 
         private void UpdatePositions()
         {
-            Rectangle AlexanderXY = grid[AlexanderX][AlexanderY];
-            Rectangle CoffeeXY = grid[CoffeeX][CoffeeY];
-            Alexander.Left = AlexanderXY.X + 1;
-            Alexander.Top = AlexanderXY.Y + 1;
+            Rect AlexanderXY = grid[AlexanderX][AlexanderY];
+            Rect CoffeeXY = grid[CoffeeX][CoffeeY];
+            /*Programmer.Left = AlexanderXY.X + 1;
+            Programmer.Top = AlexanderXY.Y + 1;
             Coffee.Left = CoffeeXY.X + 1;
-            Coffee.Top = CoffeeXY.Y + 1;
+            Coffee.Top = CoffeeXY.Y + 1;*/
         }
 
         private void DrawGrid()
         {
-            for (int x = 0; x < grid.Length; x++)
+            GridCanvas.Children.Clear();
+
+            double size = GridCanvas.ActualWidth / grid.Length;
+
+            double positionY = 0;
+            for (int i = 0; i < grid.Length; i++)
             {
-                GridPanel.CreateGraphics().DrawRectangles(new Pen(Color.White), grid[x]);
+                double positionX = 0;
+                for (int j = 0; j < grid.Length; j++)
+                {
+                    Border box = new()
+                    {
+                        BorderBrush = whiteBrush,
+                        BorderThickness = new(1),
+                        Width = size,
+                        Height = size,
+                    };
+                    GridCanvas.Children.Add(box);
+                    Canvas.SetLeft(box, positionX);
+                    Canvas.SetBottom(box, positionY);
+                    positionX += size;
+                }
+                positionY += size;
             }
         }
 
@@ -97,7 +118,7 @@ namespace CoffeeFinder
 
         private void OnRunClick(object sender, RoutedEventArgs e)
         {
-            SearchTimer.Start();
+            //SearchTimer.Start();
         }
 
         private void OnExitClick(object sender, RoutedEventArgs e)
@@ -126,8 +147,10 @@ namespace CoffeeFinder
                     break;
             }
 
-            SizeLog.Content = size.ToString();
-            InitializeGrid();
+            if (GridCanvas != null)
+            {
+                InitializeGrid();
+            }
         }
     }
 }

@@ -1,11 +1,18 @@
-﻿namespace CoffeeFinder
+﻿using System.Windows.Controls;
+
+namespace CoffeeFinder
 {
-    internal class Searcher
+    internal class Entity : Image
     {
 
     }
 
-    internal class Target
+    internal class Searcher : Entity
+    {
+
+    }
+
+    internal class Target : Entity
     {
 
     }

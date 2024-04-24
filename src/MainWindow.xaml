@@ -22,7 +22,7 @@
             <Label x:Name="SizeLog" Content="{Binding ElementName=SizeSlider, Path=Value}" FontFamily="Nineteen Ninety Seven" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,140,0,0" FontSize="14" Grid.Row="1" Foreground="White"/>
         </Grid>
         <Border x:Name="VisualizerBorder" BorderThickness="3,3,3,3" BorderBrush="Gainsboro" Margin="10,10,10,10" Background="#7F1E1E1E">
-            <Canvas x:Name="VisualizerCanvas"/>
+            <Canvas x:Name="GridCanvas"/>
         </Border>
     </Grid>
 </Window>
