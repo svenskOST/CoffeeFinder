@@ -9,20 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="assets\alexander.png" />
-    <None Remove="assets\coffee.png" />
     <None Remove="assets\CoffeeIcon.ico" />
     <None Remove="assets\NineteenNinetySeven.ttf" />
+    <None Remove="assets\searcher.png" />
+    <None Remove="assets\target.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="assets\alexander.png">
+    <Content Include="assets\searcher.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\CoffeeIcon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="assets\coffee.png">
+    <Content Include="assets\target.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\NineteenNinetySeven.ttf">
