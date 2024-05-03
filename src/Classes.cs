@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace CoffeeFinder
@@ -8,7 +9,6 @@ namespace CoffeeFinder
         public int X = 0;
         public int Y = 0;
         readonly Random random = new();
-        public Canvas GridCanvas { get; set; } = GridCanvas; // testa utan denna rad
 
         public void Initialize(double actualSize)
         {
@@ -59,6 +59,28 @@ namespace CoffeeFinder
             base.Initialize(actualSize);
             Source = new BitmapImage(new Uri("/assets/searcher.png", UriKind.Relative));
         }
+
+        public void Search(Entity Target)
+        {
+            if (X < Target.X)
+            {
+                MoveRight();
+            }
+            else if (X > Target.X)
+            {
+                MoveLeft();
+            }
+            else if (Y < Target.Y)
+            {
+                MoveDown();
+            }
+            else if (Y > Target.Y)
+            {
+                MoveUp();
+            }
+
+            RenderPosition();
+        }
     }
 
     internal class Target(Canvas GridCanvas, int length) : Entity(GridCanvas, length)
@@ -67,6 +89,30 @@ namespace CoffeeFinder
         {
             base.Initialize(actualSize);
             Source = new BitmapImage(new Uri("/assets/target.png", UriKind.Relative));
+        }
+
+        public void Avoid()
+        {
+            Random random = new();
+            int direction = random.Next(0, 4);
+
+            switch (direction)
+            {
+                case 0:
+                    if (X > 0) MoveLeft();
+                    break;
+                case 1:
+                    if (X < length - 1) MoveRight();
+                    break;
+                case 2:
+                    if (Y > 0) MoveUp();
+                    break;
+                case 3:
+                    if (Y < length - 1) MoveDown();
+                    break;
+            }
+
+            RenderPosition();
         }
     }
 }

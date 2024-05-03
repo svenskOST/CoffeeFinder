@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace CoffeeFinder
 {
@@ -9,17 +11,24 @@ namespace CoffeeFinder
         readonly static SolidColorBrush whiteBrush = new(Colors.White);
         int size;
 
+        Searcher? Searcher;
+        Target? Target;
+
+        readonly DispatcherTimer searchTimer = new();
+
         public MainWindow()
         {
             InitializeComponent();
+            searchTimer.Tick += new(OnSearchTick!);
+            searchTimer.Interval = new(0, 0, 0, 0, 200);
         }
 
         private void Initialize()
         {
             int length = (int)Math.Floor(GridCanvas.ActualWidth / size);
 
-            Searcher Searcher = new(GridCanvas, length);
-            Target Target = new(GridCanvas, length);
+            Searcher = new(GridCanvas, length);
+            Target = new(GridCanvas, length);
 
             GridCanvas.Children.Clear();
 
@@ -53,6 +62,26 @@ namespace CoffeeFinder
             }
         }
 
+        private void OnSearchTick(object sender, EventArgs e)
+        {
+            Searcher!.Search(Target!);
+
+            if (Searcher.X == Target!.X && Searcher.Y == Target.Y)
+            {
+                Found();
+                searchTimer.Stop();
+            } 
+            else
+            {
+                Target.Avoid();
+            }
+        }
+
+        private static void Found()
+        {
+            MessageBox.Show("The programmer found the coffee!");
+        }
+
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             Initialize();
@@ -60,7 +89,7 @@ namespace CoffeeFinder
 
         private void OnRunClick(object sender, RoutedEventArgs e)
         {
-            //SearchTimer.Start();
+            searchTimer.Start();
         }
 
         private void OnExitClick(object sender, RoutedEventArgs e)
