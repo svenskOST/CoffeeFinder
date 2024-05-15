@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -23,6 +22,7 @@ namespace CoffeeFinder
             searchTimer.Interval = new(0, 0, 0, 0, 200);
         }
 
+        // Metod för att initialisera canvas och objekten vid start samt ändring av storlek
         private void Initialize()
         {
             int length = (int)Math.Floor(GridCanvas.ActualWidth / size);
@@ -34,6 +34,7 @@ namespace CoffeeFinder
 
             double actualSize = GridCanvas.ActualWidth / length;
 
+            // Med dessa for loopar ritas rutnätet upp 
             double y = 0;
             for (int i = 0; i < length; i++)
             {
@@ -55,6 +56,7 @@ namespace CoffeeFinder
                 y += actualSize;
             }
 
+            // Initialisera objekten, om de får samma position initialiseras de igen
             while (Searcher.X == Target.X && Searcher.Y == Target.Y)
             {
                 Searcher.Initialize(actualSize);
@@ -62,6 +64,7 @@ namespace CoffeeFinder
             }
         }
 
+        // För varje tick på timern gör de två objekten ett drag, tills att searcher hittat target
         private void OnSearchTick(object sender, EventArgs e)
         {
             Searcher!.Search(Target!);

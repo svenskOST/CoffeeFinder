@@ -1,18 +1,22 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace CoffeeFinder
 {
-    internal class Entity(Canvas GridCanvas, int length) : Image
+    // Searcher och Target är baserade på klassen Entity, en bild med tillagd funktionalitet
+    internal class Entity(Canvas GridCanvas, int length = 1) : Image
     {
+        // X och Y värden för objektets position i rutnätet
         public int X = 0;
         public int Y = 0;
         readonly Random random = new();
 
         public void Initialize(double actualSize)
         {
-            GridCanvas.Children.Add(this);
+            if (!GridCanvas.Children.Contains(this))
+            {
+                GridCanvas.Children.Add(this);
+            }
             X = RandomInt();
             Y = RandomInt();
             Width = actualSize;
@@ -25,12 +29,14 @@ namespace CoffeeFinder
             return random.Next(0, length - 1);
         }
 
+        // Metod för att uppdatera objektets position visuellt
         public void RenderPosition()
         {
             Canvas.SetLeft(this, X * Width);
             Canvas.SetTop(this, Y * Height);
         }
 
+        // Metoder för att ändra position i olika riktningar
         public void MoveLeft()
         {
             X--;
@@ -60,6 +66,7 @@ namespace CoffeeFinder
             Source = new BitmapImage(new Uri("/assets/searcher.png", UriKind.Relative));
         }
 
+        // Enkel metod för att söka efter Target
         public void Search(Entity Target)
         {
             if (X < Target.X)
@@ -83,7 +90,7 @@ namespace CoffeeFinder
         }
     }
 
-    internal class Target(Canvas GridCanvas, int length) : Entity(GridCanvas, length)
+    internal class Target(Canvas GridCanvas, int length) : Entity(GridCanvas)
     {
         public new void Initialize(double actualSize)
         {
@@ -91,6 +98,7 @@ namespace CoffeeFinder
             Source = new BitmapImage(new Uri("/assets/target.png", UriKind.Relative));
         }
 
+        // Metod som ger slumpmässig förflyttning
         public void Avoid()
         {
             Random random = new();
